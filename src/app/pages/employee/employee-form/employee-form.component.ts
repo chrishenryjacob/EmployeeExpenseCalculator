@@ -9,7 +9,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 
-import { EmployeeService } from '@shared/services/employee.service';
+import { EmployeeService } from '@shared/services/employee/employee.service';
 
 @Component({
   selector: 'app-employee-form',
