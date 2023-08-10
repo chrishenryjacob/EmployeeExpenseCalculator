@@ -1,6 +1,7 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withRouterConfig } from "@angular/router";
+import { provideHttpClient } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 
 import en from '@angular/common/locales/en';
@@ -13,6 +14,7 @@ import { appRoutes } from './app/app.routes';
 bootstrapApplication(AppComponent, {
   providers: [
     provideAnimations(),
+    provideHttpClient(),
     provideRouter(
       appRoutes,
       withRouterConfig({ onSameUrlNavigation: 'reload' })
