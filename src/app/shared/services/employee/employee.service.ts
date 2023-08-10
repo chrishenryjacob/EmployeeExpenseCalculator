@@ -7,15 +7,15 @@ import { of } from 'rxjs';
 export class EmployeeService {
 
   create(payload: any) {
-    const result = this.fetch('EmployeeDetails');
+    const data = this.fetch('EmployeeDetails');
 
-    const hasDuplicate = result.some((item: any) => item.id === payload.id);
+    const hasDuplicate = data.some((item: any) => item.id === payload.id);
     if (hasDuplicate) {
       return of({ isSuccess: false, msg: 'Duplicate value' });
     }
 
-    result.push(payload);
-    localStorage.setItem('EmployeeDetails', JSON.stringify(result));
+    data.push(payload);
+    localStorage.setItem('EmployeeDetails', JSON.stringify(data));
 
     return of({ isSuccess: true, msg: 'Created Successfully' });
   }
@@ -25,21 +25,23 @@ export class EmployeeService {
   }
 
   readById(id: string) {
-    const result = this.fetch('EmployeeDetails');
-    return of(result.find(item => item.id === id));
+    const data = this.fetch('EmployeeDetails');
+    return of(data.find(item => item.id === id));
   }
 
   update(payload: any) {
-    const result = this.fetch('EmployeeDetails');
-    result.map((item: any) => item.id === payload.id ? payload : item);
-    localStorage.setItem('EmployeeDetails', JSON.stringify(result));
+    const data = this.fetch('EmployeeDetails');
+    data.map((item: any) => item.id === payload.id ? payload : item);
+    localStorage.setItem('EmployeeDetails', JSON.stringify(data));
 
     return of({ isSuccess: true, msg: 'Updated Successfully' });
   }
 
   delete(id: string) {
-    const result = this.fetch('EmployeeDetails');
-    return of(result.filter(item => item.id !== id));
+    const data = this.fetch('EmployeeDetails');
+    const result = data.filter(item => item.id !== id);
+    localStorage.setItem('EmployeeDetails', JSON.stringify(result));
+    return of(result);
   }
 
   private fetch(name: string): any[] {
