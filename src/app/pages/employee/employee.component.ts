@@ -10,7 +10,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
-import { Employee } from '@shared/models/employee.type';
+import { Employee } from '@shared/models/employee.model';
 import { EmployeeService } from '@shared/services/employee/employee.service';
 
 @Component({

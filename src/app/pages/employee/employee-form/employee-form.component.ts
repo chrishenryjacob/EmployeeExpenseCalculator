@@ -10,6 +10,8 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 
 import { EmployeeService } from '@shared/services/employee/employee.service';
+import { EmployeeType } from '@shared/models/employee-type.model';
+import { EmployeeTypeList } from '@shared/constants/employee-type.data';
 
 @Component({
   selector: 'app-employee-form',
@@ -24,9 +26,12 @@ import { EmployeeService } from '@shared/services/employee/employee.service';
 export class EmployeeFormComponent implements OnInit {
 
   employeeForm = this.fb.nonNullable.group({
+    id: [crypto.randomUUID(), Validators.required],
     name: [null, [Validators.required]],
-    type: [null, [Validators.required]]
+    type: [null, [Validators.required]],
+    allocation: [{ value: 0, disabled: true }, Validators.required]
   });
+  employeeTypes: EmployeeType[] = EmployeeTypeList;
   service = inject(EmployeeService);
   action: number = 0;
   navigateUrl: string = '/page/employee';
@@ -44,9 +49,14 @@ export class EmployeeFormComponent implements OnInit {
     this.employeeForm.patchValue(formData);
   }
 
+  onEmployeeTypeChange(type: any) {
+    const employeeType = this.employeeTypes.find(item => item.name === type);
+    this.employeeForm.get('allocation')?.setValue(employeeType?.allocation ?? 0);
+  }
+
   submitForm(): void {
     if (this.employeeForm.valid) {
-      this.action === 0 ? this.createCountry() : this.updateCountry();
+      this.action === 0 ? this.createEmployee() : this.updateEmployee();
     } else {
       Object.values(this.employeeForm.controls).forEach(control => {
         if (control.invalid) {
@@ -57,7 +67,7 @@ export class EmployeeFormComponent implements OnInit {
     }
   }
 
-  createCountry() {
+  createEmployee() {
     this.service.create(this.employeeForm.getRawValue()).subscribe(res => {
       if (res.isSuccess) {
         this.router.navigate([this.navigateUrl]);
@@ -65,7 +75,7 @@ export class EmployeeFormComponent implements OnInit {
     })
   }
 
-  updateCountry() {
+  updateEmployee() {
     this.service.update(this.employeeForm.getRawValue()).subscribe(res => {
       if (res.isSuccess) {
         this.router.navigate([this.navigateUrl]);
