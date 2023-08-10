@@ -22,7 +22,7 @@ export class LayoutComponent {
   isCollapsed = false;
 
   menuList: Menu[] = [
-    { name: 'Menu 1', icon: 'home', url: '' },
+    { name: 'Employee', icon: 'home', url: '/page/employee' },
     { name: 'Menu 2', icon: 'home', url: '' }
   ];
 }
