@@ -10,7 +10,7 @@ export const appRoutes: Routes = [
     {
         path: '**',
         title: 'Not Found',
-        loadComponent: () => import('./pages/not-found/not-found.component')
+        loadComponent: () => import('./auth/not-found/not-found.component')
             .then((c) => c.NotFoundComponent)
-    },
+    }
 ];
