@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -29,9 +29,11 @@ export class EmployeeFormComponent implements OnInit {
   });
   service = inject(EmployeeService);
   action: number = 0;
+  navigateUrl: string = '/page/employee';
 
   constructor(
-    private fb: FormBuilder, private activatedRoute: ActivatedRoute) { }
+    private fb: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ formData }) => formData && this.processFormData(formData));
@@ -56,14 +58,18 @@ export class EmployeeFormComponent implements OnInit {
   }
 
   createCountry() {
-    this.service.createEmployee(this.employeeForm.getRawValue()).subscribe(res => {
-
+    this.service.create(this.employeeForm.getRawValue()).subscribe(res => {
+      if (res.isSuccess) {
+        this.router.navigate([this.navigateUrl]);
+      }
     })
   }
 
   updateCountry() {
-    this.service.updateEmployee(this.employeeForm.getRawValue()).subscribe(res => {
-
+    this.service.update(this.employeeForm.getRawValue()).subscribe(res => {
+      if (res.isSuccess) {
+        this.router.navigate([this.navigateUrl]);
+      }
     })
   }
 }
