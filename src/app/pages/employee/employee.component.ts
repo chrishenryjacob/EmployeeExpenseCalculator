@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -11,6 +11,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 import { Employee } from '@shared/models/employee.type';
+import { EmployeeService } from '@shared/services/employee/employee.service';
 
 @Component({
   selector: 'app-employee',
@@ -22,18 +23,28 @@ import { Employee } from '@shared/models/employee.type';
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.scss']
 })
-export class EmployeeComponent {
+export class EmployeeComponent implements OnInit {
+
+  service = inject(EmployeeService)
   employeeList: Employee[] = [];
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
+
+  ngOnInit(): void {
+    this.getEmployeeList();
+  }
+
+  getEmployeeList() {
+    this.service.read().subscribe(res => this.employeeList = res);
+  }
 
   onEdit(data: any) {
     this.router.navigate(['./edit', data.id], { relativeTo: this.activatedRoute });
   }
 
   onDelete(data: any) {
-    // this.countryService.deleteCountry(data.id).subscribe((res: any) => {
-    //   this.listOfData = this.listOfData.filter(item => item.id != res.data);
-    // });
+    this.service.delete(data.id).subscribe((res: any) => {
+      this.employeeList = this.employeeList.filter(item => item.id != data.id);
+    });
   }
 }
