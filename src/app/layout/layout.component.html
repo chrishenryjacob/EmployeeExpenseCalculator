@@ -2,14 +2,12 @@
   <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
     <div class="logo"></div>
     <ul nz-menu nzTheme="dark" nzMode="inline">
-      <li nz-menu-item [routerLink]="['']">
-        <span nz-icon nzType="home"></span>
-        <span>Menu 1</span>
-      </li>
-      <li nz-menu-item [routerLink]="['']">
-        <span nz-icon nzType="file-add"></span>
-        <span>Menu 2</span>
-      </li>
+      <ng-container *ngFor="let menu of menuList">
+        <li nz-menu-item [routerLink]="[menu.url]">
+          <span nz-icon [nzType]="menu.icon"></span>
+          <span>{{menu.name}}</span>
+        </li>
+      </ng-container>
     </ul>
   </nz-sider>
   <nz-layout>
