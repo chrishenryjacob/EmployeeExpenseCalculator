@@ -6,6 +6,14 @@ export const appRoutes: Routes = [
     {
         path: '',
         component: LayoutComponent,
+        children: [
+            {
+                path: '',
+                title: 'Home',
+                loadComponent: () => import('./home/home.component')
+                    .then((c) => c.HomeComponent)
+            },
+        ]
     },
     {
         path: '**',
