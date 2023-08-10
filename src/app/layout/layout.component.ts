@@ -6,7 +6,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 
-import { Menu } from '@shared/models/menu.type';
+import { Menu } from '@shared/models/menu.model';
 
 @Component({
   selector: 'app-layout',
