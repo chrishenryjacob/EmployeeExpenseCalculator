@@ -7,5 +7,10 @@ export const appRoutes: Routes = [
         path: '',
         component: LayoutComponent,
     },
-    { path: '**', redirectTo: '/not-found' },
+    {
+        path: '**',
+        title: 'Not Found',
+        loadComponent: () => import('./pages/not-found/not-found.component')
+            .then((c) => c.NotFoundComponent)
+    },
 ];
