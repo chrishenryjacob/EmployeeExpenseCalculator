@@ -1,8 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { of } from 'rxjs';
 
-import { StorageService } from '../storage/storage.service';
-
 @Injectable({
   providedIn: 'root'
 })
