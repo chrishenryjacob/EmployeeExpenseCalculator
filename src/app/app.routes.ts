@@ -13,6 +13,11 @@ export const appRoutes: Routes = [
                 loadComponent: () => import('./home/home.component')
                     .then((c) => c.HomeComponent)
             },
+            {
+                path: 'page',
+                loadChildren: () => import('./pages/page.routes')
+                    .then((r) => r.pageRoutes)
+            }
         ]
     },
     {
