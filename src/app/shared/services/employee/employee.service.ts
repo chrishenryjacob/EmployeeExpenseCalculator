@@ -24,6 +24,25 @@ export class EmployeeService {
     return of(this.fetch('EmployeeDetails'))
   }
 
+  private convertSubordinates(result: any[], id: string): any {
+    const item = result.find(res => res.id === id);
+    if (item) {
+      item.subordinates = item.subordinates.map((subId: string) => this.convertSubordinates(result, subId));
+      return item;
+    }
+    return null;
+  }
+
+  readDetailed() {
+    const result = this.fetch('EmployeeDetails');
+
+    result.forEach(item => {
+      item.subordinates = item.subordinates.map((subId: string) => this.convertSubordinates(result, subId));
+    });
+
+    return of(result);
+  }
+
   readById(id: string) {
     const data = this.fetch('EmployeeDetails');
     return of(data.find(item => item.id === id));
@@ -31,7 +50,7 @@ export class EmployeeService {
 
   update(payload: any) {
     let data = this.fetch('EmployeeDetails');
-    data = data.filter(item=>item.id !== payload.id);
+    data = data.filter(item => item.id !== payload.id);
 
     data.push(payload);
     localStorage.setItem('EmployeeDetails', JSON.stringify(data));
