@@ -4,7 +4,8 @@
             <nz-form-item>
                 <nz-form-label>Department/Manager</nz-form-label>
                 <nz-form-control>
-                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Please select" [(ngModel)]="selectedData">
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Please select" [(ngModel)]="selectedItem"
+                        (ngModelChange)="onChange($event)">
                         <nz-option *ngFor="let option of employeeList" [nzValue]="option"
                             [nzLabel]="option.name"></nz-option>
                     </nz-select>

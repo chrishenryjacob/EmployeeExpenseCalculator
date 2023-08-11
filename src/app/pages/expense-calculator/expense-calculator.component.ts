@@ -15,7 +15,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
   standalone: true,
   imports: [
     CommonModule, FormsModule,
-    NzCardModule, NzButtonModule, NzSelectModule,NzFormModule
+    NzCardModule, NzButtonModule, NzSelectModule, NzFormModule
   ],
   templateUrl: './expense-calculator.component.html',
   styleUrls: ['./expense-calculator.component.scss']
@@ -24,15 +24,29 @@ export class ExpenseCalculatorComponent implements OnInit {
   employeeService = inject(EmployeeService);
 
   employeeList: Employee[] = [];
-  selectedData: any[] = [];
+  selectedItem: any;
+  totalExpense: number = 0;
 
   ngOnInit(): void {
     this.getEmployeeList();
   }
 
   getEmployeeList() {
-    this.employeeService.read().subscribe(res =>
+    this.employeeService.readDetailed().subscribe(res =>
       this.employeeList = res.filter(item => item.type === 'Manager'));
   }
 
+  onChange(data: any) {
+    this.totalExpense = this.calculateTotalAllocations(data);
+  }
+
+  calculateTotalAllocations(employee: any): number {
+    let totalAllocation = employee.allocation;
+
+    for (const subordinate of employee.subordinates || []) {
+      totalAllocation += this.calculateTotalAllocations(subordinate);
+    }
+
+    return totalAllocation;
+  }
 }
