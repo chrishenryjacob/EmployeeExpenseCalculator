@@ -34,13 +34,14 @@ export class DepartmentService {
   }
 
   readDetailed() {
-    const result = this.fetch('DepartmentDetails');
+    const departmentData = this.fetch('DepartmentDetails');
+    const employeeData = this.fetch('EmployeeDetails');
 
-    result.forEach(item => {
-      item.subordinates = item.subordinates.map((subId: string) => this.convertSubordinates(result, subId));
+    departmentData.forEach(item => {
+      item.members = item.members.map((subId: string) => this.convertSubordinates(employeeData, subId));
     });
 
-    return of(result);
+    return of(departmentData);
   }
 
   readById(id: string) {
