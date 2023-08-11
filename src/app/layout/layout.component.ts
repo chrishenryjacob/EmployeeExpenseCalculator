@@ -23,6 +23,6 @@ export class LayoutComponent {
 
   menuList: Menu[] = [
     { name: 'Employee', icon: 'home', url: '/page/employee' },
-    { name: 'Menu 2', icon: 'home', url: '' }
+    { name: 'Expense Calculator', icon: 'home', url: '/page/expense-calculator' }
   ];
 }
