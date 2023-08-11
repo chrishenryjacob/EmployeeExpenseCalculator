@@ -35,10 +35,10 @@ export class EmployeeFormComponent implements OnInit {
     name: [null, [Validators.required]],
     type: [null, [Validators.required]],
     allocation: [{ value: 0, disabled: true }, Validators.required],
-    subordinates: [[]]
+    subordinates: [[] as any]
   });
 
-  employeeList: Employee[] = [];
+  employeeList: any[] = [];
   employeeTypes: EmployeeType[] = EmployeeTypeList;
   action: number = 0;
   navigateUrl: string = '/page/employee';
@@ -93,6 +93,16 @@ export class EmployeeFormComponent implements OnInit {
         this.router.navigate([this.navigateUrl]);
       }
     })
+  }
+
+  disableSubordinates(data: Employee[]) {
+    const disableIds: string[] = data
+      .filter(item => item.subordinates?.length! > 0)
+      .flatMap(item => (item.subordinates || []).map(subordinate => subordinate.id));
+
+    this.employeeList.forEach(item => {
+      item.disabled = disableIds.includes(item.id);
+    });
   }
 
   markFormAsDirty() {
