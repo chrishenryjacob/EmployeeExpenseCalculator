@@ -1,6 +1,6 @@
 <nz-card [nzBordered]="false" nzTitle="Expense Calculator">
-    <div nz-row>
-        <div nz-col>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+        <div nz-col nzXs="24" nzSm="24" nzMd="12" nzXl="8" nzXXl="6">
             <nz-form-item>
                 <nz-form-label>Department/Manager</nz-form-label>
                 <nz-form-control>
@@ -12,6 +12,10 @@
                 </nz-form-control>
             </nz-form-item>
         </div>
+
+        <nz-col [nzSpan]="12" style="text-align: right;">
+            <nz-statistic [nzValue]="(totalExpense | currency: 'USD')!" [nzTitle]="'Total Expense'"></nz-statistic>
+        </nz-col>
     </div>
 
 </nz-card>

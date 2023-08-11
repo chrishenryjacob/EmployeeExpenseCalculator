@@ -9,13 +9,14 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 
 @Component({
   selector: 'app-expense-calculator',
   standalone: true,
   imports: [
     CommonModule, FormsModule,
-    NzCardModule, NzButtonModule, NzSelectModule, NzFormModule
+    NzCardModule, NzButtonModule, NzSelectModule, NzFormModule, NzStatisticModule
   ],
   templateUrl: './expense-calculator.component.html',
   styleUrls: ['./expense-calculator.component.scss']
@@ -37,7 +38,7 @@ export class ExpenseCalculatorComponent implements OnInit {
   }
 
   onChange(data: any) {
-    this.totalExpense = this.calculateTotalAllocations(data);
+    this.totalExpense = data ? this.calculateTotalAllocations(data) : 0;
   }
 
   calculateTotalAllocations(employee: any): number {
