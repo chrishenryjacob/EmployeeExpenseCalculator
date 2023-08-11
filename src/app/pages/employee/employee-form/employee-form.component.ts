@@ -44,22 +44,27 @@ export class EmployeeFormComponent implements OnInit {
   navigateUrl: string = '/page/employee';
 
   constructor(
-    private fb: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute
+    private fb: FormBuilder, private router: Router, private route: ActivatedRoute
   ) {
     this.getEmployeeList();
   }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ formData }) => formData && this.processFormData(formData));
+    const formId = this.route.snapshot.paramMap.get('id');
+    if (formId) {
+      this.getEmployeeDetails(formId);
+    }
   }
 
   private getEmployeeList() {
     this.service.read().subscribe(res => this.employeeList = res)
   }
 
-  private processFormData(formData: any) {
-    this.action = formData ? 1 : 0;
-    this.employeeForm.patchValue(formData);
+  private getEmployeeDetails(id: string) {
+    this.service.readById(id).subscribe(res => {
+      this.action = 1;
+      this.employeeForm.patchValue(res);
+    })
   }
 
   onEmployeeTypeChange(type: any) {

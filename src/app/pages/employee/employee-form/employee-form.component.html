@@ -34,9 +34,9 @@
                     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="subordinates">Subordinates</nz-form-label>
                     <nz-form-control [nzSm]="14" [nzXs]="24">
                         <nz-select [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple"
-                            nzPlaceHolder="Please select" formControlName="subordinates"
-                            (ngModelChange)="disableSubordinates($event)">
-                            <nz-option *ngFor="let option of employeeList" [nzLabel]="option.name" [nzValue]="option"
+                            nzPlaceHolder="Please select" formControlName="subordinates">
+                            <!-- (ngModelChange)="disableSubordinates($event)"> -->
+                            <nz-option *ngFor="let option of employeeList" [nzLabel]="option.name" [nzValue]="option.id"
                                 [nzDisabled]="option.disabled"></nz-option>
                         </nz-select>
                         <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more

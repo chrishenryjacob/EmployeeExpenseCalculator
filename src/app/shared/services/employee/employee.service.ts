@@ -30,8 +30,10 @@ export class EmployeeService {
   }
 
   update(payload: any) {
-    const data = this.fetch('EmployeeDetails');
-    data.map((item: any) => item.id === payload.id ? payload : item);
+    let data = this.fetch('EmployeeDetails');
+    data = data.filter(item=>item.id !== payload.id);
+
+    data.push(payload);
     localStorage.setItem('EmployeeDetails', JSON.stringify(data));
 
     return of({ isSuccess: true, msg: 'Updated Successfully' });
