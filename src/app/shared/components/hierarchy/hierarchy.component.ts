@@ -18,23 +18,24 @@ import { NzTreeModule, NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 })
 export class HierarchyComponent implements OnChanges {
   @Input() data: any;
+  @Input() type: any;
 
   nodes: NzTreeNodeOptions[] = [];
 
   ngOnChanges() {
-    this.nodes = [this.createNodes(this.data)];
+    this.nodes = [this.createNodes(this.data, this.type)];
   }
 
-  private createNodes(employee: any) {
+  private createNodes(data: any, type: string = '') {
     const node: any = {
-      title: employee.name,
-      key: employee.id,
+      title: data.name,
+      key: data.id,
       expanded: true,
       children: []
     };
-
-    if (employee.subordinates.length > 0) {
-      node.children = employee.subordinates.map((subordinate: any) => this.createNodes(subordinate));
+    const values = type === 'Department' ? data.members : data.subordinates;
+    if (values.length > 0) {
+      node.children = values.map((subordinate: any) => this.createNodes(subordinate));
     } else {
       node.isLeaf = true;
     }
