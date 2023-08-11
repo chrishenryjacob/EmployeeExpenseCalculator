@@ -8,6 +8,12 @@ export const pageRoutes: Routes = [
             .then(r => r.employeeRoutes)
     },
     {
+        path: 'department',
+        title: 'Department',
+        loadChildren: () => import('./department/department.routes')
+            .then(r => r.departmentRoutes)
+    },
+    {
         path: 'expense-calculator',
         title: 'Expense Calculator',
         loadComponent: () => import('./expense-calculator/expense-calculator.component')
