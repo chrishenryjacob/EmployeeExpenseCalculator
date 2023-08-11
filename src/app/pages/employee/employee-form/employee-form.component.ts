@@ -12,12 +12,14 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { EmployeeService } from '@shared/services/employee/employee.service';
 import { EmployeeType } from '@shared/models/employee-type.model';
 import { EmployeeTypeList } from '@shared/constants/employee-type.data';
+import { HierarchyComponent } from '@shared/components/hierarchy/hierarchy.component';
 
 @Component({
   selector: 'app-employee-form',
   standalone: true,
   imports: [
     CommonModule, ReactiveFormsModule,
+    HierarchyComponent,
     NzCardModule, NzButtonModule, NzFormModule, NzInputModule, NzSelectModule
   ],
   templateUrl: './employee-form.component.html',
