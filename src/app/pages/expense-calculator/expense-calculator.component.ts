@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { EmployeeService } from '@shared/services/employee/employee.service';
 import { Employee } from '@shared/models/employee.model';
 import { HierarchyComponent } from '@shared/components/hierarchy/hierarchy.component';
+import { Department } from '@shared/models/department.model';
+import { DepartmentService } from '@shared/services/department/department.service';
 
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -26,31 +28,60 @@ import { NzTreeViewModule } from 'ng-zorro-antd/tree-view';
 })
 export class ExpenseCalculatorComponent implements OnInit {
   employeeService = inject(EmployeeService);
+  departmenService = inject(DepartmentService);
 
-  employeeList: Employee[] = [];
-  selectedItem: any;
+  managerList: Employee[] = [];
+  selectedManager: any;
+  departmentList: Department[] = [];
+  selectedDepartment: any;
   totalExpense: number = 0;
+  type!: string;
+  hierarchyData: any;
 
   ngOnInit(): void {
     this.getEmployeeList();
+    this.getDepartmentList();
   }
 
   getEmployeeList() {
     this.employeeService.readDetailed().subscribe(res =>
-      this.employeeList = res.filter(item => item.type === 'Manager'));
+      this.managerList = res.filter(item => item.type === 'Manager'));
   }
 
-  onChange(data: any) {
-    this.totalExpense = data ? this.calculateTotalAllocations(data) : 0;
+  getDepartmentList() {
+    this.departmenService.readDetailed().subscribe(res => this.departmentList = res);
   }
 
-  calculateTotalAllocations(employee: any): number {
-    let totalAllocation = employee.allocation;
+  onTypeChange(data: any) {
+    this.hierarchyData = null;
+  }
 
-    for (const subordinate of employee.subordinates || []) {
-      totalAllocation += this.calculateTotalAllocations(subordinate);
+  onManagerChange(data: any) {
+    this.hierarchyData = this.selectedManager;
+    this.totalExpense = data ? this.calculateAllocations(data) : 0;
+  }
+
+  onDepartmentChange(data: any) {
+    this.hierarchyData = this.selectedDepartment;
+    this.totalExpense = data ? this.calculateAllocations(data, 'Department') : 0;
+  }
+
+  calculateAllocations(data: any, type: string = ''): number {
+    let expense = 0;
+    let result = undefined;
+
+    if (type === 'Department') {
+      result = data.members;
+    }
+    else{
+      expense = data.allocation;
+      result = data.subordinates;
     }
 
-    return totalAllocation;
+    for (const item of result || []) {
+      expense += this.calculateAllocations(item);
+    }
+
+    return expense;
   }
 }

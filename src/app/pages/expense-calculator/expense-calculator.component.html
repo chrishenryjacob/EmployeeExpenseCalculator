@@ -2,29 +2,50 @@
     <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
         <div nz-col nzXs="24" nzSm="24" nzMd="12" nzXl="8" nzXXl="6">
             <nz-form-item>
-                <nz-form-label>Department/Manager</nz-form-label>
+                <nz-form-label>Type</nz-form-label>
                 <nz-form-control>
-                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Please select" [(ngModel)]="selectedItem"
-                        (ngModelChange)="onChange($event)">
-                        <nz-option *ngFor="let option of employeeList" [nzValue]="option"
+                    <nz-select nzShowSearch nzPlaceHolder="Please select" [(ngModel)]="type" (ngModelChange)="onTypeChange($event)">
+                        <nz-option nzLabel="Department" nzValue="Department"></nz-option>
+                        <nz-option nzLabel="Manager" nzValue="Manager"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
+        <div nz-col nzXs="24" nzSm="24" nzMd="12" nzXl="8" nzXXl="6">
+            <nz-form-item *ngIf="type === 'Manager'">
+                <nz-form-label>Manager</nz-form-label>
+                <nz-form-control>
+                    <nz-select nzShowSearch nzPlaceHolder="Please select" [(ngModel)]="selectedManager"
+                        (ngModelChange)="onManagerChange($event)">
+                        <nz-option *ngFor="let option of managerList" [nzValue]="option"
+                            [nzLabel]="option.name"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item *ngIf="type === 'Department'">
+                <nz-form-label>Department</nz-form-label>
+                <nz-form-control>
+                    <nz-select nzShowSearch nzPlaceHolder="Please select" [(ngModel)]="selectedDepartment"
+                        (ngModelChange)="onDepartmentChange($event)">
+                        <nz-option *ngFor="let option of departmentList" [nzValue]="option"
                             [nzLabel]="option.name"></nz-option>
                     </nz-select>
                 </nz-form-control>
             </nz-form-item>
         </div>
-
-        <nz-col [nzSpan]="12" style="text-align: right;">
-            <nz-statistic [nzValue]="(totalExpense | currency: 'USD')!" [nzTitle]="'Total Expense'"></nz-statistic>
-        </nz-col>
     </div>
 
-    <div *ngIf="selectedItem" nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+    <div *ngIf="hierarchyData" nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
         <div nz-col nzXs="24" nzSm="24" nzMd="12" nzXl="8" nzXXl="6">
             <nz-form-item>
                 <nz-form-label>Hierarchy</nz-form-label>
-                <app-hierarchy [data]="selectedItem" />
+                <app-hierarchy [data]="hierarchyData" [type]="type"/>
             </nz-form-item>
         </div>
+        <nz-col [nzSpan]="12">
+            <nz-statistic [nzValue]="(totalExpense | currency: 'USD')!" [nzTitle]="'Total Expense'"></nz-statistic>
+        </nz-col>
     </div>
 
 </nz-card>
