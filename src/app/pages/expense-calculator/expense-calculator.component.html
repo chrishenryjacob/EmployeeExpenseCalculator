@@ -4,7 +4,8 @@
             <nz-form-item>
                 <nz-form-label>Type</nz-form-label>
                 <nz-form-control>
-                    <nz-select nzShowSearch nzPlaceHolder="Please select" [(ngModel)]="type" (ngModelChange)="onTypeChange($event)">
+                    <nz-select nzShowSearch nzPlaceHolder="Please select" [(ngModel)]="type"
+                        (ngModelChange)="onTypeChange($event)">
                         <nz-option nzLabel="Department" nzValue="Department"></nz-option>
                         <nz-option nzLabel="Manager" nzValue="Manager"></nz-option>
                     </nz-select>
@@ -40,11 +41,12 @@
         <div nz-col nzXs="24" nzSm="24" nzMd="12" nzXl="8" nzXXl="6">
             <nz-form-item>
                 <nz-form-label>Hierarchy</nz-form-label>
-                <app-hierarchy [data]="hierarchyData" [type]="type"/>
+                <app-hierarchy [data]="hierarchyData" [type]="type" />
             </nz-form-item>
         </div>
         <nz-col [nzSpan]="12">
-            <nz-statistic [nzValue]="(totalExpense | currency: 'USD')!" [nzTitle]="'Total Expense'"></nz-statistic>
+            <nz-statistic [nzValue]="(totalExpense | currency: 'USD':'symbol':'1.0-0')!"
+                [nzTitle]="'Total Expense'"></nz-statistic>
         </nz-col>
     </div>
 
