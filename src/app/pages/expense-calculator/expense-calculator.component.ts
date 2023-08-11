@@ -54,6 +54,8 @@ export class ExpenseCalculatorComponent implements OnInit {
 
   onTypeChange(data: any) {
     this.hierarchyData = null;
+    this.selectedManager = null;
+    this.selectedDepartment = null;
   }
 
   onManagerChange(data: any) {
@@ -73,7 +75,7 @@ export class ExpenseCalculatorComponent implements OnInit {
     if (type === 'Department') {
       result = data.members;
     }
-    else{
+    else {
       expense = data.allocation;
       result = data.subordinates;
     }
