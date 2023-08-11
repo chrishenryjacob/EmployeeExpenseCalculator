@@ -31,10 +31,10 @@ export class DepartmentComponent implements OnInit {
   constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getEmployeeList();
+    this.getDepartmentList();
   }
 
-  getEmployeeList() {
+  getDepartmentList() {
     this.service.read().subscribe(res => this.departmentList = res);
   }
 

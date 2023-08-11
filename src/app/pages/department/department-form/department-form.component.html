@@ -1,1 +1,40 @@
-<p>department-form works!</p>
+<nz-card [nzBordered]="false" [nzTitle]="action === 1 ? 'Edit ' : 'Add ' + 'Department' ">
+    <form nz-form [formGroup]="departmentForm" (ngSubmit)="onSubmit()">
+        <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+            <div nz-col nzXs="24" nzSm="24" nzMd="12" nzXl="8" nzXXl="6">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Mandatory Field">
+                        <input nz-input formControlName="name" id="name" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col nzXs="24" nzSm="24" nzMd="12" nzXl="8" nzXXl="6">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="members">Members</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                        <nz-select [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple"
+                            nzPlaceHolder="Please select" formControlName="members">
+                            <nz-option *ngFor="let option of employeeList" [nzLabel]="option.name" [nzValue]="option.id"
+                                [nzDisabled]="option.disabled"></nz-option>
+                        </nz-select>
+                        <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more
+                            selected</ng-template>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+
+        <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+            <div nz-col nzXs="24" nzSm="24" nzMd="12" nzXl="8" nzXXl="6">
+                <nz-form-item>
+                    <nz-form-control>
+                        <button nz-button nzType="primary">Submit</button>
+                        <button nz-button (click)="onCancel()">Cancel</button>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+
+    </form>
+</nz-card>
