@@ -54,7 +54,7 @@ export class EmployeeFormComponent implements OnInit {
     this.employeeForm.get('allocation')?.setValue(employeeType?.allocation ?? 0);
   }
 
-  onCancelClick() {
+  onCancel() {
     this.router.navigate([this.navigateUrl]);
   }
 

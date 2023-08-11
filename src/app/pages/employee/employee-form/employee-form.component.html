@@ -1,32 +1,46 @@
 <nz-card [nzBordered]="false" [nzTitle]="action === 1 ? 'Edit ' : 'Add ' + 'Employee' ">
     <form nz-form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
-        <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
-            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Mandatory Field">
-                <input nz-input formControlName="name" id="name" />
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="type">Type</nz-form-label>
-            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Mandatory Field">
-                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a type" formControlName="type"
-                    (ngModelChange)="onEmployeeTypeChange($event)">
-                    <nz-option *ngFor="let option of employeeTypes" [nzValue]="option.name"
-                        [nzLabel]="option.name"></nz-option>
-                </nz-select>
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="allocation">Allocation</nz-form-label>
-            <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Mandatory Field">
-                <input nz-input formControlName="allocation" id="allocation" />
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-control [nzOffset]="6" [nzSpan]="14">
-                <button nz-button nzType="primary">Submit</button>
-                <button nz-button nzType="default" (click)="onCancelClick()">Cancel</button>
-            </nz-form-control>
-        </nz-form-item>
+        <div nz-row class="page-form-layout" [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+            <div nz-col nzXs="24" nzSm="24" nzMd="12" nzXl="8" nzXXl="6">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Mandatory Field">
+                        <input nz-input formControlName="name" id="name" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col nzXs="24" nzSm="24" nzMd="12" nzXl="8" nzXXl="6">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="type">Type</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Mandatory Field">
+                        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a type" formControlName="type"
+                            (ngModelChange)="onEmployeeTypeChange($event)">
+                            <nz-option *ngFor="let option of employeeTypes" [nzValue]="option.name"
+                                [nzLabel]="option.name"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div nz-col nzXs="24" nzSm="24" nzMd="12" nzXl="8" nzXXl="6">
+                <nz-form-item>
+                    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="allocation">Allocation</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Mandatory Field">
+                        <input nz-input formControlName="allocation" id="allocation" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+
+        <div nz-row>
+            <div nz-col [nzSpan]="24">
+                <nz-form-item>
+                    <nz-form-control>
+                        <button nz-button nzType="primary">Submit</button>
+                        <button nz-button (click)="onCancel()">Cancel</button>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </div>
+
     </form>
 </nz-card>
