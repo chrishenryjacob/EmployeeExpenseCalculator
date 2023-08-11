@@ -1,6 +1,6 @@
 <nz-card [nzBordered]="false" [nzTitle]="action === 1 ? 'Edit ' : 'Add ' + 'Employee' ">
     <form nz-form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
-        <div nz-row class="page-form-layout" [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+        <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
             <div nz-col nzXs="24" nzSm="24" nzMd="12" nzXl="8" nzXXl="6">
                 <nz-form-item>
                     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
@@ -31,8 +31,8 @@
             </div>
         </div>
 
-        <div nz-row>
-            <div nz-col [nzSpan]="24">
+        <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+            <div nz-col nzXs="24" nzSm="24" nzMd="12" nzXl="8" nzXXl="6">
                 <nz-form-item>
                     <nz-form-control>
                         <button nz-button nzType="primary">Submit</button>
