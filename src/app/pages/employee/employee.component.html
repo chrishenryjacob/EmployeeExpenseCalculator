@@ -4,6 +4,7 @@
             <tr>
                 <th>Name</th>
                 <th>Type</th>
+                <th>Allocation</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -11,6 +12,7 @@
             <tr *ngFor="let data of basicTable.data">
                 <td>{{ data.name }}</td>
                 <td>{{ data.type }}</td>
+                <td>{{ data.allocation | currency:'USD' }}</td>
                 <td>
                     <a nz-button nzSize="small" nzType="text" (click)="onEdit(data)"><i nz-icon nzType="edit"
                             nzTheme="fill" style="color:#1890ff"></i></a>
