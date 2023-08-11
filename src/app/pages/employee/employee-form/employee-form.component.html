@@ -33,7 +33,14 @@
                 <nz-form-item>
                     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="subordinates">Subordinates</nz-form-label>
                     <nz-form-control [nzSm]="14" [nzXs]="24">
-                        <app-hierarchy/>
+                        <nz-select [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple"
+                            nzPlaceHolder="Please select" formControlName="subordinates">
+                            <nz-option *ngFor="let option of employeeList" [nzLabel]="option.name"
+                                [nzValue]="option"></nz-option>
+                        </nz-select>
+                        <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more
+                            selected</ng-template>
+                        <!-- <app-hierarchy/> -->
                         <!-- <input nz-input formControlName="allocation" id="allocation" /> -->
                     </nz-form-control>
                 </nz-form-item>

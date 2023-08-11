@@ -13,6 +13,7 @@ import { EmployeeService } from '@shared/services/employee/employee.service';
 import { EmployeeType } from '@shared/models/employee-type.model';
 import { EmployeeTypeList } from '@shared/constants/employee-type.data';
 import { HierarchyComponent } from '@shared/components/hierarchy/hierarchy.component';
+import { Employee } from '@shared/models/employee.model';
 
 @Component({
   selector: 'app-employee-form',
@@ -27,23 +28,33 @@ import { HierarchyComponent } from '@shared/components/hierarchy/hierarchy.compo
 })
 export class EmployeeFormComponent implements OnInit {
 
+  service = inject(EmployeeService);
+
   employeeForm = this.fb.nonNullable.group({
     id: [crypto.randomUUID(), Validators.required],
     name: [null, [Validators.required]],
     type: [null, [Validators.required]],
-    allocation: [{ value: 0, disabled: true }, Validators.required]
+    allocation: [{ value: 0, disabled: true }, Validators.required],
+    subordinates: [[]]
   });
+
+  employeeList: Employee[] = [];
   employeeTypes: EmployeeType[] = EmployeeTypeList;
-  service = inject(EmployeeService);
   action: number = 0;
   navigateUrl: string = '/page/employee';
 
   constructor(
     private fb: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute
-  ) { }
+  ) {
+    this.getEmployeeList();
+  }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ formData }) => formData && this.processFormData(formData));
+  }
+
+  private getEmployeeList() {
+    this.service.read().subscribe(res => this.employeeList = res)
   }
 
   private processFormData(formData: any) {
