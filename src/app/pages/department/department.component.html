@@ -1,1 +1,32 @@
-<p>department works!</p>
+<nz-card [nzBordered]="false" nzTitle="Department" [nzExtra]="extraTemplate">
+    <nz-table #basicTable [nzData]="departmentList">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td>{{ data.name }}</td>
+                <td>
+                    <a nz-button nzSize="small" nzType="text" (click)="onEdit(data)"><i nz-icon nzType="edit"
+                            nzTheme="fill" style="color:#1890ff"></i></a>
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <a nz-button [nzDanger]="true" nzSize="small" nzType="text" nz-popconfirm
+                        nzPopconfirmTitle="Are you sure?" nzOkText="Yes" nzCancelText="No"
+                        (nzOnConfirm)="onDelete(data)" [nzIcon]="iconTpl"><i nz-icon nzType="delete"
+                            nzTheme="fill"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</nz-card>
+
+<ng-template #iconTpl>
+    <i nz-icon nzType="question-circle-o" style="color: red;"></i>
+</ng-template>
+
+<ng-template #extraTemplate>
+    <a [routerLink]="['./add']"><span nz-icon nzType="plus" nzTheme="outline"></span> Add</a>
+</ng-template>
