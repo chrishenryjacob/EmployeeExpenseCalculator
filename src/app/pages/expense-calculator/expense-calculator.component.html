@@ -18,4 +18,13 @@
         </nz-col>
     </div>
 
+    <div *ngIf="selectedItem" nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+        <div nz-col nzXs="24" nzSm="24" nzMd="12" nzXl="8" nzXXl="6">
+            <nz-form-item>
+                <nz-form-label>Hierarchy</nz-form-label>
+                <app-hierarchy [data]="selectedItem" />
+            </nz-form-item>
+        </div>
+    </div>
+
 </nz-card>
