@@ -1,3 +1,18 @@
 <nz-card>
-    <nz-tree [nzData]="nodes"></nz-tree>
+    <nz-tree [nzData]="nodes" [nzTreeTemplate]="nzTreeTemplate"></nz-tree>
 </nz-card>
+
+<ng-template #nzTreeTemplate let-node let-origin="origin">
+    <span class="custom-node">
+        <span *ngIf="!node.isLeaf">
+            <span class="folder-name">{{ node.title }}</span>
+            <span *ngIf="origin.expense" class="folder-desc"> <nz-tag class="tag">{{origin.expense |
+                    currency:'USD':'symbol':'1.0-0'}}</nz-tag> </span>
+        </span>
+        <span *ngIf="node.isLeaf">
+            <span class="file-name">{{ node.title }}</span>
+            <span *ngIf="origin.expense" class="file-desc"> <nz-tag class="tag">{{origin.expense |
+                    currency:'USD':'symbol':'1.0-0'}}</nz-tag> </span>
+        </span>
+    </span>
+</ng-template>
