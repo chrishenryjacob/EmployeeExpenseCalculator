@@ -1,5 +1,5 @@
 <nz-card [nzBordered]="false" [nzTitle]="action === 1 ? 'Edit ' : 'Add ' + 'Employee' ">
-    <form nz-form [formGroup]="employeeForm" (ngSubmit)="submitForm()">
+    <form nz-form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
         <nz-form-item>
             <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
             <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Mandatory Field">
@@ -25,6 +25,7 @@
         <nz-form-item>
             <nz-form-control [nzOffset]="6" [nzSpan]="14">
                 <button nz-button nzType="primary">Submit</button>
+                <button nz-button nzType="default" (click)="onCancelClick()">Cancel</button>
             </nz-form-control>
         </nz-form-item>
     </form>

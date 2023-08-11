@@ -54,16 +54,15 @@ export class EmployeeFormComponent implements OnInit {
     this.employeeForm.get('allocation')?.setValue(employeeType?.allocation ?? 0);
   }
 
-  submitForm(): void {
+  onCancelClick() {
+    this.router.navigate([this.navigateUrl]);
+  }
+
+  onSubmit() {
     if (this.employeeForm.valid) {
       this.action === 0 ? this.createEmployee() : this.updateEmployee();
     } else {
-      Object.values(this.employeeForm.controls).forEach(control => {
-        if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
-        }
-      });
+      this.markFormAsDirty();
     }
   }
 
@@ -82,4 +81,14 @@ export class EmployeeFormComponent implements OnInit {
       }
     })
   }
+
+  markFormAsDirty() {
+    Object.values(this.employeeForm.controls).forEach(control => {
+      if (control.invalid) {
+        control.markAsDirty();
+        control.updateValueAndValidity({ onlySelf: true });
+      }
+    });
+  }
+
 }
