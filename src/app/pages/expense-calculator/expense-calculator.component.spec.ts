@@ -3,6 +3,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ExpenseCalculatorComponent } from './expense-calculator.component';
 import { ManagerData } from '@shared/mocks/managerData';
+import { DepartmentData } from '@shared/mocks/departmentData';
 
 describe('ExpenseCalculatorComponent', () => {
   let component: ExpenseCalculatorComponent;
@@ -30,4 +31,12 @@ describe('ExpenseCalculatorComponent', () => {
     const result = component.calculateAllocations(data, type);
     expect(result).toBe(3100);
   });
+
+  it('should calculate correct expense for department', () => {
+    const data = DepartmentData;
+    const type = 'Department';
+    const result = component.calculateAllocations(data, type);
+    expect(result).toBe(2300);
+  });
+
 });
