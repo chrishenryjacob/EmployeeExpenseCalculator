@@ -34,13 +34,22 @@ export class EmployeeService {
   }
 
   readDetailed() {
-    const result = this.fetch('EmployeeDetails');
+    const data = this.fetch('EmployeeDetails');
+    return of(data.map(item => this.transformSubordinates(item)));
+  }
 
-    result.forEach(item => {
-      item.subordinates = item.subordinates.map((subId: string) => this.convertSubordinates(result, subId));
-    });
+  transformSubordinates(data: any) {
+    if (data.subordinates.length > 0) {
+      const subordinates = data.subordinates.map((subId: string) =>
+        this.transformSubordinates(this.getEmployee(subId)));
+      return { ...data, subordinates: subordinates.filter(Boolean) };
+    } else {
+      return data;
+    }
+  }
 
-    return of(result);
+  getEmployee(id: string) {
+    return this.fetch('EmployeeDetails').find(item => item.id === id);
   }
 
   readById(id: string) {
