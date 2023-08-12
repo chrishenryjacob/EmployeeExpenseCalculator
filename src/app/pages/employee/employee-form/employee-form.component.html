@@ -29,7 +29,8 @@
                     </nz-form-control>
                 </nz-form-item>
             </div>
-            <div nz-col nzXs="24" nzSm="24" nzMd="12" nzXl="8" nzXXl="6">
+            <div *ngIf="formControl['name'].value && formControl['type'].value === 'Manager'" nz-col nzXs="24" nzSm="24"
+                nzMd="12" nzXl="8" nzXXl="6">
                 <nz-form-item>
                     <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="subordinates">Subordinates</nz-form-label>
                     <nz-form-control [nzSm]="14" [nzXs]="24">

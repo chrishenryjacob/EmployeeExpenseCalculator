@@ -43,6 +43,10 @@ export class EmployeeFormComponent implements OnInit {
   action: number = 0;
   navigateUrl: string = '/page/employee';
 
+  get formControl() {
+    return this.employeeForm.controls;
+  }
+
   constructor(
     private fb: FormBuilder, private router: Router, private route: ActivatedRoute
   ) {
