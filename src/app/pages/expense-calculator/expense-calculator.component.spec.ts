@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ExpenseCalculatorComponent } from './expense-calculator.component';
+import { ManagerData } from '@shared/mocks/managerData';
 
 describe('ExpenseCalculatorComponent', () => {
   let component: ExpenseCalculatorComponent;
@@ -23,40 +24,10 @@ describe('ExpenseCalculatorComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should calculate correct expense for department', () => {
+  it('should calculate correct expense for manager', () => {
     const data = ManagerData;
     const type = 'Manager';
     const result = component.calculateAllocations(data, type);
     expect(result).toBe(3100);
   });
 });
-
-const ManagerData = {
-  name: 'Project Manager',
-  type: 'Manager',
-  allocation: 300,
-  subordinates: [
-    {
-      name: 'Dev Manager',
-      type: 'Manager',
-      allocation: 300,
-      subordinates: [
-        {
-          name: 'Developer 1',
-          type: 'Developer',
-          allocation: 1000
-        },
-        {
-          name: 'Developer 2',
-          type: 'Developer',
-          allocation: 1000
-        }
-      ]
-    },
-    {
-      name: 'QA 1',
-      type: 'QA Tester',
-      allocation: 500
-    }
-  ]
-};
