@@ -44,7 +44,7 @@ export class DepartmentFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const formId = this.route.snapshot.paramMap.get('id');
+    const formId = this.route.snapshot.params['id'];
     if (formId) {
       this.getDepartmentDetails(formId);
     }

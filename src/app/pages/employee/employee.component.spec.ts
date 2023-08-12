@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ActivatedRoute } from '@angular/router';
 
 import { EmployeeComponent } from './employee.component';
 
@@ -8,7 +10,18 @@ describe('EmployeeComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [EmployeeComponent]
+      imports: [
+        EmployeeComponent,
+        HttpClientTestingModule
+      ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: { params: { id: '24fkzrw3487943uf358lovd' } }
+          }
+        }
+      ]
     });
     fixture = TestBed.createComponent(EmployeeComponent);
     component = fixture.componentInstance;
