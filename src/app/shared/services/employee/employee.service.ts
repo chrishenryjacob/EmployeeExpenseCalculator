@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 
 @Injectable({
@@ -50,11 +50,13 @@ export class EmployeeService {
 
   update(payload: any) {
     let data = this.fetch('EmployeeDetails');
-    data = data.filter(item => item.id !== payload.id);
+    const index = data.findIndex(item => item.id === payload.id);
+    if (index === -1) {
+      return of({ isSuccess: false, msg: 'Employee not found' });
+    }
 
-    data.push(payload);
+    data[index] = payload;
     localStorage.setItem('EmployeeDetails', JSON.stringify(data));
-
     return of({ isSuccess: true, msg: 'Updated Successfully' });
   }
 

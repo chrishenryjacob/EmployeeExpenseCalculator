@@ -51,11 +51,13 @@ export class DepartmentService {
 
   update(payload: any) {
     let data = this.fetch('DepartmentDetails');
-    data = data.filter(item => item.id !== payload.id);
+    const index = data.findIndex(item => item.id === payload.id);
+    if (index === -1) {
+      return of({ isSuccess: false, msg: 'Department not found' });
+    }
 
-    data.push(payload);
+    data[index] = payload;
     localStorage.setItem('DepartmentDetails', JSON.stringify(data));
-
     return of({ isSuccess: true, msg: 'Updated Successfully' });
   }
 
