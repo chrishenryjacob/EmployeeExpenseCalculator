@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HierarchyComponent } from './hierarchy.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('HierarchyComponent', () => {
   let component: HierarchyComponent;
@@ -8,7 +9,10 @@ describe('HierarchyComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HierarchyComponent]
+      imports: [
+        NoopAnimationsModule,
+        HierarchyComponent
+      ]
     });
     fixture = TestBed.createComponent(HierarchyComponent);
     component = fixture.componentInstance;
