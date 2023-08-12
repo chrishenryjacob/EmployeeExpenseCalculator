@@ -61,14 +61,30 @@ export class EmployeeFormComponent implements OnInit {
   }
 
   private getEmployeeList() {
-    this.service.read().subscribe(res => this.employeeList = res)
+    this.service.read().subscribe(res => {
+      this.employeeList = res;
+    });
   }
 
   private getEmployeeDetails(id: string) {
     this.service.readById(id).subscribe(res => {
       this.action = 1;
+      this.removeInvalidIds(res);
       this.employeeForm.patchValue(res);
     })
+  }
+
+  private fetchInvalidIds(data: Employee) {
+    const result: string[] = [data.id];
+    if (data.refs && data.refs?.length > 0) {
+      result.push(...data.refs)
+    }
+    return result;
+  }
+
+  private removeInvalidIds(data: Employee) {
+    const invalidIds = this.fetchInvalidIds(data)
+    this.employeeList = this.employeeList.filter(item => !invalidIds.includes(item.id));
   }
 
   onEmployeeTypeChange(type: any) {
