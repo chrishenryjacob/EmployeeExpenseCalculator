@@ -3,16 +3,17 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { EmployeeService } from '@shared/services/employee/employee.service';
+import { EmployeeType } from '@shared/models/employee-type.model';
+import { EmployeeTypeList } from '@shared/constants/employee-type.data';
+import { Employee } from '@shared/models/employee.model';
+
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-
-import { EmployeeService } from '@shared/services/employee/employee.service';
-import { EmployeeType } from '@shared/models/employee-type.model';
-import { EmployeeTypeList } from '@shared/constants/employee-type.data';
-import { Employee } from '@shared/models/employee.model';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-employee-form',
@@ -27,6 +28,7 @@ import { Employee } from '@shared/models/employee.model';
 export class EmployeeFormComponent implements OnInit {
 
   service = inject(EmployeeService);
+  msg = inject(NzMessageService)
 
   employeeForm = this.fb.nonNullable.group({
     id: [crypto.randomUUID(), Validators.required],
@@ -83,19 +85,37 @@ export class EmployeeFormComponent implements OnInit {
   }
 
   createEmployee() {
-    this.service.create(this.employeeForm.getRawValue()).subscribe(res => {
-      if (res.isSuccess) {
-        this.router.navigate([this.navigateUrl]);
+    this.service.create(this.employeeForm.getRawValue()).subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          this.msg.success(res.msg);
+          this.router.navigate([this.navigateUrl]);
+        }
+        else {
+          this.msg.warning(res.msg);
+        }
+      },
+      error: (err) => {
+        this.msg.error(err?.error?.message || 'Something went wrong');
       }
-    })
+    });
   }
 
   updateEmployee() {
-    this.service.update(this.employeeForm.getRawValue()).subscribe(res => {
-      if (res.isSuccess) {
-        this.router.navigate([this.navigateUrl]);
+    this.service.update(this.employeeForm.getRawValue()).subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          this.msg.success(res.msg);
+          this.router.navigate([this.navigateUrl]);
+        }
+        else {
+          this.msg.warning(res.msg);
+        }
+      },
+      error: (err) => {
+        this.msg.error(err?.error?.message || 'Something went wrong');
       }
-    })
+    });
   }
 
   disableSubordinates(data: Employee[]) {

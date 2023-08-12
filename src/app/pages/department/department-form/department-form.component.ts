@@ -11,6 +11,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-department-form',
@@ -26,6 +27,7 @@ export class DepartmentFormComponent implements OnInit {
 
   service = inject(DepartmentService);
   employeeService = inject(EmployeeService);
+  msg = inject(NzMessageService)
 
   departmentForm = this.fb.nonNullable.group({
     id: [crypto.randomUUID(), Validators.required],
@@ -74,19 +76,37 @@ export class DepartmentFormComponent implements OnInit {
   }
 
   createDepartment() {
-    this.service.create(this.departmentForm.getRawValue()).subscribe(res => {
-      if (res.isSuccess) {
-        this.router.navigate([this.navigateUrl]);
+    this.service.create(this.departmentForm.getRawValue()).subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          this.msg.success(res.msg);
+          this.router.navigate([this.navigateUrl]);
+        }
+        else {
+          this.msg.warning(res.msg);
+        }
+      },
+      error: (err) => {
+        this.msg.error(err?.error?.message || 'Something went wrong');
       }
-    })
+    });
   }
 
   updateDepartment() {
-    this.service.update(this.departmentForm.getRawValue()).subscribe(res => {
-      if (res.isSuccess) {
-        this.router.navigate([this.navigateUrl]);
+    this.service.create(this.departmentForm.getRawValue()).subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          this.msg.success(res.msg);
+          this.router.navigate([this.navigateUrl]);
+        }
+        else {
+          this.msg.warning(res.msg);
+        }
+      },
+      error: (err) => {
+        this.msg.error(err?.error?.message || 'Something went wrong');
       }
-    })
+    });
   }
 
   markFormAsDirty() {

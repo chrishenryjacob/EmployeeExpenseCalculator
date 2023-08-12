@@ -3,15 +3,16 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
+import { Employee } from '@shared/models/employee.model';
+import { EmployeeService } from '@shared/services/employee/employee.service';
+
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-
-import { Employee } from '@shared/models/employee.model';
-import { EmployeeService } from '@shared/services/employee/employee.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-employee',
@@ -25,7 +26,8 @@ import { EmployeeService } from '@shared/services/employee/employee.service';
 })
 export class EmployeeComponent implements OnInit {
 
-  service = inject(EmployeeService)
+  service = inject(EmployeeService);
+  msg = inject(NzMessageService);
   employeeList: Employee[] = [];
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
@@ -43,8 +45,19 @@ export class EmployeeComponent implements OnInit {
   }
 
   onDelete(data: any) {
-    this.service.delete(data.id).subscribe((res: any) => {
-      this.employeeList = this.employeeList.filter(item => item.id != data.id);
+    this.service.delete(data.id).subscribe({
+      next: (res: any) => {
+        if (res.isSuccess) {
+          this.msg.success(res.msg);
+          this.employeeList = this.employeeList.filter(item => item.id != data.id);
+        }
+        else {
+          this.msg.warning(res.msg);
+        }
+      },
+      error: (err) => {
+        this.msg.error(err?.error?.message || 'Something went wrong');
+      },
     });
   }
 }

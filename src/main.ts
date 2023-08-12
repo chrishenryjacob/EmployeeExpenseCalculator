@@ -7,6 +7,7 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 registerLocaleData(en);
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { NzMessageService } from "ng-zorro-antd/message";
 
 import { AppComponent } from './app/app.component';
 import { appRoutes } from './app/app.routes';
@@ -20,5 +21,6 @@ bootstrapApplication(AppComponent, {
       withRouterConfig({ onSameUrlNavigation: 'reload' })
     ),
     { provide: NZ_I18N, useValue: en_US },
-  ],
+    NzMessageService
+  ]
 }).catch((err) => console.error(err));

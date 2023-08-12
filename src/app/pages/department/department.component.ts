@@ -12,6 +12,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-department',
@@ -25,7 +26,9 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 })
 export class DepartmentComponent implements OnInit {
 
-  service = inject(DepartmentService)
+  service = inject(DepartmentService);
+  msg = inject(NzMessageService);
+
   departmentList: Department[] = [];
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
@@ -43,8 +46,20 @@ export class DepartmentComponent implements OnInit {
   }
 
   onDelete(data: any) {
-    this.service.delete(data.id).subscribe((res: any) => {
-      this.departmentList = this.departmentList.filter(item => item.id != data.id);
+    this.service.delete(data.id).subscribe({
+      next: (res: any) => {
+        if (res.isSuccess) {
+          this.msg.success(res.msg);
+          this.departmentList = this.departmentList.filter(item => item.id != data.id);
+        }
+        else {
+          this.msg.warning(res.msg);
+        }
+      },
+      error: (err) => {
+        this.msg.error(err?.error?.message || 'Something went wrong');
+      },
     });
   }
+
 }

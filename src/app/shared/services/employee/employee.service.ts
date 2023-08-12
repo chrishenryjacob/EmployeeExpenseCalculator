@@ -62,7 +62,7 @@ export class EmployeeService {
     const data = this.fetch('EmployeeDetails');
     const result = data.filter(item => item.id !== id);
     localStorage.setItem('EmployeeDetails', JSON.stringify(result));
-    return of(result);
+    return of({ isSuccess: true, msg: 'Deleted Successfully' });
   }
 
   private fetch(name: string): any[] {
