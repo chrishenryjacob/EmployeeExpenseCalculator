@@ -27,7 +27,7 @@ export class EmployeeService {
   private convertSubordinates(result: any[], id: string): any {
     const item = result.find(res => res.id === id);
     if (item) {
-      item.subordinates = item.subordinates.map((subId: string) => this.convertSubordinates(result, subId));
+      item.children = item.children.map((subId: string) => this.convertSubordinates(result, subId));
       return item;
     }
     return null;
@@ -59,8 +59,8 @@ export class EmployeeService {
   }
 
   private getManagerIds(data: any, result: any[] = []) {
-    if (data.type === 'Manager' && data.subordinates?.length > 0) {
-      data.subordinates.forEach((subId: string) => {
+    if (data.type === 'Manager' && data.children?.length > 0) {
+      data.children.forEach((subId: string) => {
         const manager = this.getManager(subId);
         if (manager) {
           result.push(manager.id);
@@ -81,10 +81,10 @@ export class EmployeeService {
   }
 
   private transformSubordinates(data: any) {
-    if (data.subordinates.length > 0) {
-      const subordinates = data.subordinates.map((subId: string) =>
+    if (data.children.length > 0) {
+      const children = data.children.map((subId: string) =>
         this.transformSubordinates(this.getEmployee(subId)));
-      return { ...data, subordinates: subordinates.filter(Boolean) };
+      return { ...data, children: children.filter(Boolean) };
     } else {
       return data;
     }

@@ -5,7 +5,7 @@ export const DepartmentData = {
             name: 'Team Lead',
             type: 'Manager',
             allocation: 300,
-            subordinates: [
+            children: [
                 {
                     name: 'Developer 1',
                     type: 'Developer',

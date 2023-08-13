@@ -2,12 +2,12 @@ export const ManagerData = {
     name: 'Project Manager',
     type: 'Manager',
     allocation: 300,
-    subordinates: [
+    children: [
         {
             name: 'Dev Manager',
             type: 'Manager',
             allocation: 300,
-            subordinates: [
+            children: [
                 {
                     name: 'Developer 1',
                     type: 'Developer',

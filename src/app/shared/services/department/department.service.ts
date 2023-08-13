@@ -27,7 +27,7 @@ export class DepartmentService {
   private convertSubordinates(result: any[], id: string): any {
     const item = result.find(res => res.id === id);
     if (item) {
-      item.subordinates = item.subordinates.map((subId: string) => this.convertSubordinates(result, subId));
+      item.children = item.children.map((subId: string) => this.convertSubordinates(result, subId));
       return item;
     }
     return null;

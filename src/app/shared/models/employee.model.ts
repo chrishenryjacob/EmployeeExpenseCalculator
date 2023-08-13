@@ -3,6 +3,6 @@ export interface Employee {
     name: string;
     type: string;
     allocation: number;
-    subordinates?: Employee[];
+    children?: Employee[];
     refs?: string[];
 }

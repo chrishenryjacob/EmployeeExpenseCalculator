@@ -77,7 +77,7 @@ export class ExpenseCalculatorComponent implements OnInit {
     }
     else {
       expense = data.allocation;
-      result = data.subordinates;
+      result = data.children;
     }
 
     for (const item of result || []) {

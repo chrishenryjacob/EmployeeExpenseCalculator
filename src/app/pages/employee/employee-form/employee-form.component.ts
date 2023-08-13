@@ -35,7 +35,7 @@ export class EmployeeFormComponent implements OnInit {
     name: [null, [Validators.required]],
     type: [null, [Validators.required]],
     allocation: [{ value: 0, disabled: true }, Validators.required],
-    subordinates: [[] as any]
+    children: [[] as any]
   });
 
   employeeList: any[] = [];
@@ -140,8 +140,8 @@ export class EmployeeFormComponent implements OnInit {
 
   disableSubordinates(data: Employee[]) {
     const disableIds: string[] = data
-      .filter(item => item.subordinates?.length! > 0)
-      .flatMap(item => (item.subordinates || []).map(subordinate => subordinate.id));
+      .filter(item => item.children?.length! > 0)
+      .flatMap(item => (item.children || []).map(child => child.id));
 
     this.employeeList.forEach(item => {
       item.disabled = disableIds.includes(item.id);
