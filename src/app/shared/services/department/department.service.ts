@@ -9,7 +9,7 @@ export class DepartmentService {
   create(payload: any) {
     const data = this.fetch('DepartmentDetails');
 
-    const hasDuplicate = data.some((item: any) => item.id === payload.id);
+    const hasDuplicate = data.some((item: any) => item.name === payload.name);
     if (hasDuplicate) {
       return of({ isSuccess: false, msg: 'Duplicate value' });
     }
