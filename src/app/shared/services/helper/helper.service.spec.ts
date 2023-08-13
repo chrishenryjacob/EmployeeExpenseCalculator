@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { HelperService } from './helper.service';
-import { EmployeeData } from '@shared/mocks/employeeData';
+import { DepartmentDependencyData, EmployeeDependencyData } from '@shared/mocks/dependencyData';
 
 describe('HelperService', () => {
   let service: HelperService;
@@ -16,12 +16,20 @@ describe('HelperService', () => {
   });
 
   it('should remove employeeId from refs and children in EmployeeDetails', () => {
-    const data = EmployeeData;
+    const data = EmployeeDependencyData;
     spyOn(service, 'fetchFromLocalStorage').and.returnValues(data, []);
     spyOn(localStorage, 'setItem');
     service.deleteDependencies('id123');
     expect(data[0].children).toEqual(['child2']);
     expect(data[1].refs).toEqual([]);
+  });
+
+  it('should remove employeeId from children in DepartmentDetails', () => {
+    const data = DepartmentDependencyData;
+    spyOn(service, 'fetchFromLocalStorage').and.returnValues(data, []);
+    spyOn(localStorage, 'setItem');
+    service.deleteDependencies('id123');
+    expect(data[0].children).toEqual(['child2', 'child3']);
   });
 
 });
