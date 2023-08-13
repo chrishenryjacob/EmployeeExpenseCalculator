@@ -11,7 +11,7 @@ export class EmployeeService {
 
     const hasDuplicate = data.some((item: any) => item.name === payload.name);
     if (hasDuplicate) {
-      return of({ isSuccess: false, msg: 'Duplicate value' });
+      return of({ isSuccess: false, msg: 'Duplicate name' });
     }
 
     data.push(payload);
