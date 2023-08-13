@@ -38,7 +38,7 @@ export class DepartmentService {
     const employeeData = this.fetch('EmployeeDetails');
 
     departmentData.forEach(item => {
-      item.members = item.members.map((subId: string) => this.convertSubordinates(employeeData, subId));
+      item.children = item.children.map((subId: string) => this.convertSubordinates(employeeData, subId));
     });
 
     return of(departmentData);

@@ -1,6 +1,6 @@
 export const DepartmentData = {
     name: 'Development',
-    members: [
+    children: [
         {
             name: 'Team Lead',
             type: 'Manager',

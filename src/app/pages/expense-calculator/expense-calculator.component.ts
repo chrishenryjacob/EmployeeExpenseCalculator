@@ -73,7 +73,7 @@ export class ExpenseCalculatorComponent implements OnInit {
     let result = undefined;
 
     if (type === 'Department') {
-      result = data.members;
+      result = data.children;
     }
     else {
       expense = data.allocation;

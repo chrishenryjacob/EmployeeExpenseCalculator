@@ -35,7 +35,7 @@ export class HierarchyComponent implements OnChanges {
       expense: data.allocation ?? 0,
       children: []
     };
-    const values = type === 'Department' ? data.members : data.subordinates;
+    const values = type === 'Department' ? data.children : data.subordinates;
     if (values.length > 0) {
       node.children = values.map((subordinate: any) => this.createNodes(subordinate));
     } else {
