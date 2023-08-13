@@ -109,6 +109,9 @@ export class DepartmentFormComponent implements OnInit {
     });
   }
 
+  /**
+  * Marks all form controls as dirty to trigger validation display.
+  */
   markFormAsDirty() {
     Object.values(this.departmentForm.controls).forEach(control => {
       if (control.invalid) {

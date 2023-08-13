@@ -74,6 +74,11 @@ export class EmployeeFormComponent implements OnInit {
     })
   }
 
+  /**
+  * Fetches invalid IDs to prevent cyclic references.
+  * @param data The employee data for which invalid IDs are being fetched.
+  * @returns An array of invalid IDs including the employee and its references.
+  */
   private fetchInvalidIds(data: Employee) {
     const result: string[] = [data.id];
     if (data.refs && data.refs?.length > 0) {
@@ -82,11 +87,19 @@ export class EmployeeFormComponent implements OnInit {
     return result;
   }
 
+  /**
+  * Removes invalid IDs to prevent cyclic references from the employee list.
+  * @param data The employee data for which invalid IDs are being removed.
+  */
   private removeInvalidIds(data: Employee) {
     const invalidIds = this.fetchInvalidIds(data)
     this.employeeList = this.employeeList.filter(item => !invalidIds.includes(item.id));
   }
 
+  /**
+  * Sets the value of allocations based on the selected employee type.
+  * @param type The selected employee type.
+  */
   onEmployeeTypeChange(type: any) {
     const employeeType = this.employeeTypes.find(item => item.name === type);
     this.employeeForm.get('allocation')?.setValue(employeeType?.allocation ?? 0);
@@ -138,6 +151,9 @@ export class EmployeeFormComponent implements OnInit {
     });
   }
 
+  /**
+  * Marks all form controls as dirty to trigger validation display.
+  */
   markFormAsDirty() {
     Object.values(this.employeeForm.controls).forEach(control => {
       if (control.invalid) {
