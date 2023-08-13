@@ -1,13 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { of } from 'rxjs';
+import { HelperService } from '../helper/helper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DepartmentService {
+  helper = inject(HelperService);
 
   create(payload: any) {
-    const data = this.fetch('DepartmentDetails');
+    const data = this.helper.fetchFromLocalStorage('DepartmentDetails');
 
     const hasDuplicate = data.some((item: any) => item.name === payload.name);
     if (hasDuplicate) {
@@ -21,7 +23,7 @@ export class DepartmentService {
   }
 
   read() {
-    return of(this.fetch('DepartmentDetails'));
+    return of(this.helper.fetchFromLocalStorage('DepartmentDetails'));
   }
 
   private convertSubordinates(result: any[], id: string): any {
@@ -34,8 +36,8 @@ export class DepartmentService {
   }
 
   readDetailed() {
-    const departmentData = this.fetch('DepartmentDetails');
-    const employeeData = this.fetch('EmployeeDetails');
+    const departmentData = this.helper.fetchFromLocalStorage('DepartmentDetails');
+    const employeeData = this.helper.fetchFromLocalStorage('EmployeeDetails');
 
     departmentData.forEach(item => {
       item.children = item.children.map((subId: string) => this.convertSubordinates(employeeData, subId));
@@ -45,12 +47,13 @@ export class DepartmentService {
   }
 
   readById(id: string) {
-    const data = this.fetch('DepartmentDetails');
-    return of(data.find(item => item.id === id));
+    const departmentData = this.helper.fetchFromLocalStorage('DepartmentDetails')
+      .find(item => item.id === id)
+    return of(departmentData);
   }
 
   update(payload: any) {
-    let data = this.fetch('DepartmentDetails');
+    let data = this.helper.fetchFromLocalStorage('DepartmentDetails');
     const index = data.findIndex(item => item.id === payload.id);
     if (index === -1) {
       return of({ isSuccess: false, msg: 'Department not found' });
@@ -62,14 +65,10 @@ export class DepartmentService {
   }
 
   delete(id: string) {
-    const data = this.fetch('DepartmentDetails');
-    const result = data.filter(item => item.id !== id);
-    localStorage.setItem('DepartmentDetails', JSON.stringify(result));
+    const departmentData = this.helper.fetchFromLocalStorage('DepartmentDetails')
+      .filter(item => item.id !== id);
+    localStorage.setItem('DepartmentDetails', JSON.stringify(departmentData));
     return of({ isSuccess: true, msg: 'Deleted Successfully' });
   }
 
-  private fetch(name: string): any[] {
-    const data = localStorage.getItem(name);
-    return data ? JSON.parse(data) : [];
-  }
 }
