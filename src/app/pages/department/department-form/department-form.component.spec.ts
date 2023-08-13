@@ -4,6 +4,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { ActivatedRoute } from '@angular/router';
 
 import { DepartmentFormComponent } from './department-form.component';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 describe('DepartmentFormComponent', () => {
   let component: DepartmentFormComponent;
@@ -17,6 +18,7 @@ describe('DepartmentFormComponent', () => {
         HttpClientTestingModule
       ],
       providers: [
+        NzMessageService,
         {
           provide: ActivatedRoute,
           useValue: {
