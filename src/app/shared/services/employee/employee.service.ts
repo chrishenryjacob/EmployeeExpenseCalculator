@@ -54,7 +54,11 @@ export class EmployeeService {
       return;
     }
 
-    data[index].refs = data[index].refs ? data[index].refs.push(refId) : [refId];
+    data[index].refs = data[index].refs ? data[index].refs : [];
+    if(!data[index].refs.includes(refId)){
+      data[index].refs.push(refId);
+    }
+
     localStorage.setItem('EmployeeDetails', JSON.stringify(data));
   }
 
