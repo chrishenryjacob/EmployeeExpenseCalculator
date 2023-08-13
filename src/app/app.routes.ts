@@ -9,9 +9,10 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                title: 'Home',
-                loadComponent: () => import('./home/home.component')
-                    .then((c) => c.HomeComponent)
+                redirectTo: 'page/employee', pathMatch: 'full'
+                // title: 'Home',
+                // loadComponent: () => import('./home/home.component')
+                //     .then((c) => c.HomeComponent)
             },
             {
                 path: 'page',
