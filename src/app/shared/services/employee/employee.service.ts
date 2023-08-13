@@ -148,7 +148,24 @@ export class EmployeeService {
     const data = this.fetch('EmployeeDetails');
     const result = data.filter(item => item.id !== id);
     localStorage.setItem('EmployeeDetails', JSON.stringify(result));
+    this.deleteDependencies(id);
     return of({ isSuccess: true, msg: 'Deleted Successfully' });
+  }
+
+  private deleteDependencies(employeeId: string) {
+    const employeeDetails = this.fetch('EmployeeDetails');
+    employeeDetails.forEach(item => {
+      item.refs = item.refs?.filter((id: string) => id != employeeId);
+      item.children = item.children?.filter((id: string) => id != employeeId);
+    })
+    localStorage.setItem('EmployeeDetails', JSON.stringify(employeeDetails));
+
+
+    const departmentDetails = this.fetch('DepartmentDetails');
+    departmentDetails.forEach(item => {
+      item.children = item.children?.filter((id: string) => id != employeeId);
+    })
+    localStorage.setItem('DepartmentDetails', JSON.stringify(departmentDetails));
   }
 
   private fetch(name: string): any[] {
