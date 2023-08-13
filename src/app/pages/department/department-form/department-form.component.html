@@ -11,8 +11,8 @@
             </div>
             <div nz-col nzXs="24" nzSm="24" nzMd="12" nzXl="8" nzXXl="6">
                 <nz-form-item>
-                    <nz-form-label [nzSm]="8" [nzXs]="24" nzFor="children">Members</nz-form-label>
-                    <nz-form-control [nzSm]="14" [nzXs]="24">
+                    <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="children">Members</nz-form-label>
+                    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Mandatory Field">
                         <nz-select [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder" nzMode="multiple"
                             nzPlaceHolder="Please select" formControlName="children">
                             <nz-option *ngFor="let option of employeeList" [nzLabel]="option.name" [nzValue]="option.id"

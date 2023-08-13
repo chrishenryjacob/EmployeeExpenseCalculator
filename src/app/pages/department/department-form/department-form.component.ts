@@ -32,7 +32,7 @@ export class DepartmentFormComponent implements OnInit {
   departmentForm = this.fb.nonNullable.group({
     id: [crypto.randomUUID(), Validators.required],
     name: [null, [Validators.required]],
-    children: [[] as any]
+    children: [[] as any, [Validators.required]]
   });
 
   employeeList: any[] = [];
