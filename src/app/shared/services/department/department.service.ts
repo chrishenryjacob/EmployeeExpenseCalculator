@@ -26,24 +26,9 @@ export class DepartmentService {
     return of(this.helper.fetchFromLocalStorage('DepartmentDetails'));
   }
 
-  private convertSubordinates(result: any[], id: string): any {
-    const item = result.find(res => res.id === id);
-    if (item) {
-      item.children = item.children.map((subId: string) => this.convertSubordinates(result, subId));
-      return item;
-    }
-    return null;
-  }
-
   readDetailed() {
-    const departmentData = this.helper.fetchFromLocalStorage('DepartmentDetails');
-    const employeeData = this.helper.fetchFromLocalStorage('EmployeeDetails');
-
-    departmentData.forEach(item => {
-      item.children = item.children.map((subId: string) => this.convertSubordinates(employeeData, subId));
-    });
-
-    return of(departmentData);
+    const data = this.helper.fetchFromLocalStorage('DepartmentDetails');
+    return of(data.map(item => this.helper.transformChildren(item)));
   }
 
   readById(id: string) {
