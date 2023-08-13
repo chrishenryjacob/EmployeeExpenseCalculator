@@ -17,7 +17,7 @@
                 <nz-form-label>Manager</nz-form-label>
                 <nz-form-control>
                     <nz-select nzShowSearch nzPlaceHolder="Please select" [(ngModel)]="selectedManager"
-                        (ngModelChange)="onHeaderChange($event)">
+                        (ngModelChange)="onManagerChange($event)">
                         <nz-option *ngFor="let option of managerList" [nzValue]="option"
                             [nzLabel]="option.name"></nz-option>
                     </nz-select>
@@ -28,7 +28,7 @@
                 <nz-form-label>Department</nz-form-label>
                 <nz-form-control>
                     <nz-select nzShowSearch nzPlaceHolder="Please select" [(ngModel)]="selectedDepartment"
-                        (ngModelChange)="onHeaderChange($event)">
+                        (ngModelChange)="onDepartmentChange($event)">
                         <nz-option *ngFor="let option of departmentList" [nzValue]="option"
                             [nzLabel]="option.name"></nz-option>
                     </nz-select>
