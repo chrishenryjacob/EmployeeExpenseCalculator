@@ -16,7 +16,7 @@ export class EmployeeService {
 
     data.push(payload);
     localStorage.setItem('EmployeeDetails', JSON.stringify(data));
-
+    this.addRefs(payload);
     return of({ isSuccess: true, msg: 'Created Successfully' });
   }
 
@@ -38,7 +38,49 @@ export class EmployeeService {
     return of(data.map(item => this.transformSubordinates(item)));
   }
 
-  transformSubordinates(data: any) {
+  private addRefs(data: any) {
+    if (data.type === 'Manager') {
+      const ids = this.retrieveManagerIds(data);
+      if (ids.length > 0) {
+        ids.forEach(id => this.addRefId(id, data.id))
+      }
+    }
+  }
+
+  private addRefId(id: string, refId: string) {
+    let data = this.fetch('EmployeeDetails');
+    const index = data.findIndex(item => item.id === id);
+    if (index === -1) {
+      return;
+    }
+
+    data[index].refs = data[index].refs ? data[index].refs.push(refId) : [refId];
+    localStorage.setItem('EmployeeDetails', JSON.stringify(data));
+  }
+
+  private getManagerIds(data: any, result: any[] = []) {
+    if (data.type === 'Manager' && data.subordinates?.length > 0) {
+      data.subordinates.forEach((subId: string) => {
+        const manager = this.getManager(subId);
+        if (manager) {
+          result.push(manager.id);
+          this.getManagerIds(manager, result);
+        }
+      });
+    }
+  }
+
+  private retrieveManagerIds(data: any) {
+    const result: any[] = [];
+    this.getManagerIds(data, result);
+    return result;
+  }
+
+  getManager(id: string) {
+    return this.fetch('EmployeeDetails').find(item => item.id === id && item.type === 'Manager');
+  }
+
+  private transformSubordinates(data: any) {
     if (data.subordinates.length > 0) {
       const subordinates = data.subordinates.map((subId: string) =>
         this.transformSubordinates(this.getEmployee(subId)));
