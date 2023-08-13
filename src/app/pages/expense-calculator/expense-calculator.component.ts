@@ -68,6 +68,13 @@ export class ExpenseCalculatorComponent implements OnInit {
     this.totalExpense = data ? this.calculateAllocations(data, 'Department') : 0;
   }
 
+  /**
+   * Calculates allocations(expense) recursively based on the provided data and type.
+   * @param data The data containing allocation details.
+   * @param type The type of allocation being calculated, mainly department and manager.
+   * @param processedIds An array of processed IDs to avoid duplicate calculations (in case of department).
+   * @returns The calculated allocation value as total expense.
+   */
   calculateAllocations(data: any, type: string, processedIds: string[] = []): number {
     processedIds.push(data.id);
     let expense = data.allocation ?? 0;
