@@ -27,13 +27,13 @@ describe('ExpenseCalculatorComponent', () => {
 
   it('should calculate correct expense for manager', () => {
     const data = ManagerData;
-    const result = component.calculateAllocations(data);
-    expect(result).toBe(3100);
+    const result = component.calculateAllocations(data, 'Manager');
+    expect(result).toBe(4100);
   });
 
   it('should calculate correct expense for department', () => {
     const data = DepartmentData;
-    const result = component.calculateAllocations(data);
+    const result = component.calculateAllocations(data, 'Department');
     expect(result).toBe(2300);
   });
 
