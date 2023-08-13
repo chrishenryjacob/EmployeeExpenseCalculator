@@ -79,7 +79,7 @@ export class EmployeeFormComponent implements OnInit {
   * @param data The employee data for which invalid IDs are being fetched.
   * @returns An array of invalid IDs including the employee and its references.
   */
-  private fetchInvalidIds(data: Employee) {
+  fetchInvalidIds(data: any) {
     const result: string[] = [data.id];
     if (data.refs && data.refs?.length > 0) {
       result.push(...data.refs)

@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { EmployeeFormComponent } from './employee-form.component';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { InvalidIdData } from '@shared/mocks/invalidIdData';
 
 describe('EmployeeFormComponent', () => {
   let component: EmployeeFormComponent;
@@ -35,4 +36,11 @@ describe('EmployeeFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should remove IDs including the employee and its references', () => {
+    const data = InvalidIdData;
+    const result = component.fetchInvalidIds(data);
+    expect(result).toEqual(['id1', 'id3']);
+  });
+
 });
