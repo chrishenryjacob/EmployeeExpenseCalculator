@@ -55,7 +55,7 @@ export class EmployeeService {
     }
 
     data[index].refs = data[index].refs ? data[index].refs : [];
-    if(!data[index].refs.includes(refId)){
+    if (!data[index].refs.includes(refId)) {
       data[index].refs.push(refId);
     }
 
@@ -104,6 +104,7 @@ export class EmployeeService {
   }
 
   update(payload: any) {
+    this.updateRefs(payload.id);
     let data = this.fetch('EmployeeDetails');
     const index = data.findIndex(item => item.id === payload.id);
     if (index === -1) {
@@ -112,7 +113,35 @@ export class EmployeeService {
 
     data[index] = payload;
     localStorage.setItem('EmployeeDetails', JSON.stringify(data));
+    this.addRefs(payload);
     return of({ isSuccess: true, msg: 'Updated Successfully' });
+  }
+
+  private updateRefs(id: string) {
+    let employeeDetails = this.fetch('EmployeeDetails');
+    const index = employeeDetails.findIndex(item => item.id === id);
+    if (index === -1) {
+      return;
+    }
+    const data = employeeDetails[index];
+    if (data.type === 'Manager') {
+      const ids = this.retrieveManagerIds(data);
+      if (ids.length > 0) {
+        ids.forEach(id => this.updateRefId(id, data.id))
+      }
+    }
+  }
+
+  private updateRefId(id: string, refId: string) {
+    let data = this.fetch('EmployeeDetails');
+    const index = data.findIndex(item => item.id === id);
+    if (index === -1) {
+      return;
+    }
+
+    data[index].refs = data[index].refs ? data[index].refs.filter((item: string) => item != refId) : [];
+
+    localStorage.setItem('EmployeeDetails', JSON.stringify(data));
   }
 
   delete(id: string) {
