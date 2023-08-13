@@ -30,7 +30,7 @@ export class HierarchyComponent implements OnChanges {
  * Converts a hierarchy object to an array supporting a tree array structure.
  * @param hierarchy The hierarchy object to be converted.
  */
-  private createNodes(hierarchy: any) {
+  createNodes(hierarchy: any) {
     const node: any = {
       title: hierarchy.name,
       key: hierarchy.id,
