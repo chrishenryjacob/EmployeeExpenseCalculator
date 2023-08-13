@@ -1,4 +1,4 @@
-<nz-card [nzBordered]="false" [nzTitle]="action === 1 ? 'Edit ' : 'Add ' + 'Employee' ">
+<nz-card [nzBordered]="false" [nzTitle]="action === 1 ? 'Edit Employee' : 'Add Employee'">
     <form nz-form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
         <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
             <div nz-col nzXs="24" nzSm="24" nzMd="12" nzXl="8" nzXXl="6">
