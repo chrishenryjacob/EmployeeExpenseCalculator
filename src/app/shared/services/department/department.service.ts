@@ -65,7 +65,7 @@ export class DepartmentService {
     const data = this.fetch('DepartmentDetails');
     const result = data.filter(item => item.id !== id);
     localStorage.setItem('DepartmentDetails', JSON.stringify(result));
-    return of(result);
+    return of({ isSuccess: true, msg: 'Deleted Successfully' });
   }
 
   private fetch(name: string): any[] {
