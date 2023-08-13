@@ -138,16 +138,6 @@ export class EmployeeFormComponent implements OnInit {
     });
   }
 
-  disableSubordinates(data: Employee[]) {
-    const disableIds: string[] = data
-      .filter(item => item.children?.length! > 0)
-      .flatMap(item => (item.children || []).map(child => child.id));
-
-    this.employeeList.forEach(item => {
-      item.disabled = disableIds.includes(item.id);
-    });
-  }
-
   markFormAsDirty() {
     Object.values(this.employeeForm.controls).forEach(control => {
       if (control.invalid) {
