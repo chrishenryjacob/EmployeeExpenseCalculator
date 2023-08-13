@@ -65,22 +65,12 @@ export class ExpenseCalculatorComponent implements OnInit {
 
   onDepartmentChange(data: any) {
     this.hierarchyData = this.selectedDepartment;
-    this.totalExpense = data ? this.calculateAllocations(data, 'Department') : 0;
+    this.totalExpense = data ? this.calculateAllocations(data) : 0;
   }
 
-  calculateAllocations(data: any, type: string = ''): number {
-    let expense = 0;
-    let result = undefined;
-
-    if (type === 'Department') {
-      result = data.children;
-    }
-    else {
-      expense = data.allocation;
-      result = data.children;
-    }
-
-    for (const item of result || []) {
+  calculateAllocations(data: any): number {
+    let expense = data.allocation ?? 0;
+    for (const item of data.children || []) {
       expense += this.calculateAllocations(item);
     }
 
