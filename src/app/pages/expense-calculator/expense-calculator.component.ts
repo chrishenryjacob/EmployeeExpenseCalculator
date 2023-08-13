@@ -58,13 +58,8 @@ export class ExpenseCalculatorComponent implements OnInit {
     this.selectedDepartment = null;
   }
 
-  onManagerChange(data: any) {
-    this.hierarchyData = this.selectedManager;
-    this.totalExpense = data ? this.calculateAllocations(data) : 0;
-  }
-
-  onDepartmentChange(data: any) {
-    this.hierarchyData = this.selectedDepartment;
+  onHeaderChange(data: any) {
+    this.hierarchyData = data;
     this.totalExpense = data ? this.calculateAllocations(data) : 0;
   }
 
