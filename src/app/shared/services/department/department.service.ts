@@ -8,47 +8,76 @@ import { HelperService } from '../helper/helper.service';
 export class DepartmentService {
   helper = inject(HelperService);
 
+  /**
+  * Simulates an API call by storing data in local storage.
+  * @param payload The data to be stored.
+  */
   create(payload: any) {
-    const data = this.helper.fetchFromLocalStorage('DepartmentDetails');
+    const departmentData = this.helper.fetchFromLocalStorage('DepartmentDetails');
 
-    const hasDuplicate = data.some((item: any) => item.name === payload.name);
+    const hasDuplicate = departmentData.some((item: any) => item.name === payload.name);
     if (hasDuplicate) {
       return of({ isSuccess: false, msg: 'Duplicate name' });
     }
 
-    data.push(payload);
-    localStorage.setItem('DepartmentDetails', JSON.stringify(data));
+    departmentData.push(payload);
+    localStorage.setItem('DepartmentDetails', JSON.stringify(departmentData));
 
     return of({ isSuccess: true, msg: 'Created Successfully' });
   }
 
+  /**
+  * Reads department details from local storage and returns them as an Observable.
+  * @returns An Observable containing department details.
+  */
   read() {
     return of(this.helper.fetchFromLocalStorage('DepartmentDetails'));
   }
 
+  /**
+  * Reads department details from local storage and returns them as an Observable,
+  * with children transformed to include their details.
+  * @returns An Observable containing department details with transformed children.
+  */
   readDetailed() {
-    const data = this.helper.fetchFromLocalStorage('DepartmentDetails');
-    return of(data.map(item => this.helper.transformChildren(item)));
+    const departmentData = this.helper.fetchFromLocalStorage('DepartmentDetails');
+    return of(departmentData.map(item => this.helper.transformChildren(item)));
   }
 
+  /**
+  * Reads department details for a specific department ID from local storage
+  * and returns them as an Observable.
+  * @param id The ID of the department to be read.
+  * @returns An Observable containing department details for the specified ID.
+  */
   readById(id: string) {
     const departmentData = this.helper.fetchFromLocalStorage('DepartmentDetails')
       .find(item => item.id === id)
     return of(departmentData);
   }
 
+  /**
+  * Updates department data for a specific department ID.
+  * Mimics an API call by modifying data stored in local storage.
+  * @param payload The updated data for the department.
+  */
   update(payload: any) {
-    let data = this.helper.fetchFromLocalStorage('DepartmentDetails');
-    const index = data.findIndex(item => item.id === payload.id);
+    let departmentData = this.helper.fetchFromLocalStorage('DepartmentDetails');
+    const index = departmentData.findIndex(item => item.id === payload.id);
     if (index === -1) {
       return of({ isSuccess: false, msg: 'Department not found' });
     }
 
-    data[index] = payload;
-    localStorage.setItem('DepartmentDetails', JSON.stringify(data));
+    departmentData[index] = payload;
+    localStorage.setItem('DepartmentDetails', JSON.stringify(departmentData));
     return of({ isSuccess: true, msg: 'Updated Successfully' });
   }
 
+  /**
+  * Deletes department data for a specific department ID.
+  * Mimics an API call by removing data stored in local storage.
+  * @param id The ID of the department to be deleted.
+  */
   delete(id: string) {
     const departmentData = this.helper.fetchFromLocalStorage('DepartmentDetails')
       .filter(item => item.id !== id);
