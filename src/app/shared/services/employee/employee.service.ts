@@ -53,7 +53,7 @@ export class EmployeeService {
 
   readDetailed() {
     const data = this.helper.fetchFromLocalStorage('EmployeeDetails');
-    return of(data.map(item => this.helper.transformSubordinates(item)));
+    return of(data.map(item => this.helper.transformChildren(item)));
   }
 
   readById(id: string) {

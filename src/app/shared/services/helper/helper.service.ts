@@ -132,13 +132,13 @@ export class HelperService {
 
   /**
   * Transforms employee IDs into their corresponding details recursively.
-  * @param data The data containing an employee and its subordinates' IDs.
-  * @returns The transformed data with employee details nested under subordinates.
+  * @param data The data containing an employee and its children' IDs.
+  * @returns The transformed data with employee details nested under children.
   */
-  transformSubordinates(data: any) {
+  transformChildren(data: any) {
     if (data.children.length > 0) {
       const children = data.children.map((subId: string) =>
-        this.transformSubordinates(this.getEmployee(subId)));
+        this.transformChildren(this.getEmployee(subId)));
       return { ...data, children: children.filter(Boolean) };
     } else {
       return data;
