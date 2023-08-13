@@ -19,25 +19,24 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 })
 export class HierarchyComponent implements OnChanges {
   @Input() data: any;
-  @Input() type: any;
 
   nodes: any[] = [];
 
   ngOnChanges() {
-    this.nodes = [this.createNodes(this.data, this.type)];
+    this.nodes = [this.createNodes(this.data)];
   }
 
-  private createNodes(data: any, type: string = '') {
+  private createNodes(hierarchy: any) {
     const node: any = {
-      title: data.name,
-      key: data.id,
+      title: hierarchy.name,
+      key: hierarchy.id,
       expanded: true,
-      expense: data.allocation ?? 0,
+      expense: hierarchy.allocation ?? 0,
       children: []
     };
-    const values = type === 'Department' ? data.children : data.children;
-    if (values.length > 0) {
-      node.children = values.map((child: any) => this.createNodes(child));
+
+    if (hierarchy.children.length > 0) {
+      node.children = hierarchy.children.map((child: any) => this.createNodes(child));
     } else {
       node.isLeaf = true;
     }
