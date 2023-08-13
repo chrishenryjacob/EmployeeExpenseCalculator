@@ -37,4 +37,9 @@ describe('ExpenseCalculatorComponent', () => {
     expect(result).toBe(2300);
   });
 
+  it('should handle empty array', () => {
+    const result = component.calculateAllocations([], 'Department');
+    expect(result).toBe(0);
+  });
+
 });
